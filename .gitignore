@@ -1,0 +1,31 @@
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+
+# for gradle, IDEA
+.gradle
+build/
+*.iml
+!.idea/runConfigurations/*
+.idea/*.xml
+.idea/.name
+.idea/copyright/
+.idea/dictionaries/
+.idea/libraries/
+.idea/scopes/
+.idea/inspectionProfiles/
+
+# for eclipse
+bin
+gen
+.classpath
+.project
+
+# for Crashlytics
+crashlytics.properties
