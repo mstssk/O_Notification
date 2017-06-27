@@ -1,4 +1,4 @@
-package jp.mstssk.notification_channel_sample;
+package jp.mstssk.o_notification;
 
 import android.content.Intent;
 import android.os.Bundle;
