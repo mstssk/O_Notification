@@ -64,13 +64,15 @@ public class MainActivity extends AppCompatActivity {
                     return ChannelFragment.newInstance();
                 case 1:
                     return TimeoutFragment.newInstance();
+                case 2:
+                    return ColorFragment.newInstance();
             }
             throw new IllegalArgumentException("position:" + position + " is not implemented.");
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
     }
 }
