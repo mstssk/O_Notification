@@ -2,6 +2,7 @@ package jp.mstssk.o_notification;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -66,13 +67,15 @@ public class MainActivity extends AppCompatActivity {
                     return TimeoutFragment.newInstance();
                 case 2:
                     return ColorFragment.newInstance();
+                case 3:
+                    return MessagingFragment.newInstance();
             }
             throw new IllegalArgumentException("position:" + position + " is not implemented.");
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
     }
 }
