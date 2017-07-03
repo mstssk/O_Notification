@@ -17,13 +17,6 @@ import android.view.ViewGroup;
 
 public class ChannelFragment extends Fragment {
 
-    public static final String CHANNEL_ID_1ST = "CHANNEL_ID_1ST";
-    public static final String CHANNEL_ID_2ND = "CHANNEL_ID_2ND";
-    public static final String CHANNEL_ID_CONFIG = "CHANNEL_ID_CONFIG";
-    public static final String CHANNEL_GROUP_ID_FOO = "CHANNEL_GROUP_ID_FOO";
-    public static final String CHANNEL_ID_3RD_WITH_GROUP_FOO = "CHANNEL_ID_3RD_WITH_GROUP_FOO";
-    public static final String CHANNEL_ID_4th_WITH_GROUP_FOO = "CHANNEL_ID_4th_WITH_GROUP_FOO";
-
     /**
      * for System uses
      */
@@ -102,11 +95,11 @@ public class ChannelFragment extends Fragment {
 
     private void showNotificatinWithChannel_1() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID_1ST,
+            NotificationChannel channel = new NotificationChannel(NotifyUtils.CHANNEL_ID_1ST,
                     "1st Channel", NotificationManagerCompat.IMPORTANCE_DEFAULT);
             getActivity().getSystemService(NotificationManager.class).createNotificationChannel(channel);
         }
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), CHANNEL_ID_1ST)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), NotifyUtils.CHANNEL_ID_1ST)
                 .setContentTitle("1st Content Title")
                 .setContentText("Content text")
                 .setSmallIcon(R.mipmap.ic_launcher);
@@ -115,11 +108,11 @@ public class ChannelFragment extends Fragment {
 
     private void showNotificatinWithChannel_2() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID_2ND,
+            NotificationChannel channel = new NotificationChannel(NotifyUtils.CHANNEL_ID_2ND,
                     "2nd Channel", NotificationManagerCompat.IMPORTANCE_DEFAULT);
             getActivity().getSystemService(NotificationManager.class).createNotificationChannel(channel);
         }
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), CHANNEL_ID_2ND)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), NotifyUtils.CHANNEL_ID_2ND)
                 .setContentTitle("2nd Content Title")
                 .setContentText("Content text")
                 .setSmallIcon(R.mipmap.ic_launcher);
@@ -128,14 +121,14 @@ public class ChannelFragment extends Fragment {
 
     private void showNotificatinWithChannel_SpecifiedConfigures() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID_CONFIG,
+            NotificationChannel channel = new NotificationChannel(NotifyUtils.CHANNEL_ID_CONFIG,
                     "Configured Channel", NotificationManagerCompat.IMPORTANCE_DEFAULT);
             channel.setDescription("This is Sample Configured Channel.");
             channel.setLightColor(Color.argb(0, 1, 0, 0));
             channel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PUBLIC);
             getActivity().getSystemService(NotificationManager.class).createNotificationChannel(channel);
         }
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), CHANNEL_ID_CONFIG)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), NotifyUtils.CHANNEL_ID_CONFIG)
                 .setContentTitle("Configured Content Title")
                 .setContentText("Content text")
                 .setSmallIcon(R.mipmap.ic_launcher);
@@ -144,20 +137,20 @@ public class ChannelFragment extends Fragment {
 
     @TargetApi(Build.VERSION_CODES.O)
     private NotificationChannelGroup buildChannelGroupFoo() {
-        return new NotificationChannelGroup(CHANNEL_GROUP_ID_FOO, "Group Foo");
+        return new NotificationChannelGroup(NotifyUtils.CHANNEL_GROUP_ID_FOO, "Group Foo");
     }
 
     private void showNotificatinWithChannelGroup_1() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannelGroup group = buildChannelGroupFoo();
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID_3RD_WITH_GROUP_FOO,
+            NotificationChannel channel = new NotificationChannel(NotifyUtils.CHANNEL_ID_3RD_WITH_GROUP_FOO,
                     "3rd Channel", NotificationManagerCompat.IMPORTANCE_DEFAULT);
             channel.setGroup(group.getId());
             NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannelGroup(group);
             notificationManager.createNotificationChannel(channel);
         }
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), CHANNEL_ID_3RD_WITH_GROUP_FOO)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), NotifyUtils.CHANNEL_ID_3RD_WITH_GROUP_FOO)
                 .setContentTitle("3rd Content Title")
                 .setContentText("Content text")
                 .setSmallIcon(R.mipmap.ic_launcher);
@@ -167,14 +160,14 @@ public class ChannelFragment extends Fragment {
     private void showNotificatinWithChannelGroup_2() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannelGroup group = buildChannelGroupFoo();
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID_4th_WITH_GROUP_FOO,
+            NotificationChannel channel = new NotificationChannel(NotifyUtils.CHANNEL_ID_4th_WITH_GROUP_FOO,
                     "4th Channel", NotificationManagerCompat.IMPORTANCE_DEFAULT);
             channel.setGroup(group.getId());
             NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannelGroup(group);
             notificationManager.createNotificationChannel(channel);
         }
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), CHANNEL_ID_4th_WITH_GROUP_FOO)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), NotifyUtils.CHANNEL_ID_4th_WITH_GROUP_FOO)
                 .setContentTitle("4th Content Title")
                 .setContentText("Content text")
                 .setSmallIcon(R.mipmap.ic_launcher);
