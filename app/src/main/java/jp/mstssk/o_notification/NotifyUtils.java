@@ -8,5 +8,6 @@ class NotifyUtils {
     static final String CHANNEL_ID_3RD_WITH_GROUP_FOO = "CHANNEL_ID_3RD_WITH_GROUP_FOO";
     static final String CHANNEL_ID_4th_WITH_GROUP_FOO = "CHANNEL_ID_4th_WITH_GROUP_FOO";
     static final String CHANNEL_ID_TIMEOUT = "CHANNEL_ID_TIMEOUT";
+    static final String CHANNEL_ID_COLOR = "CHANNEL_ID_COLOR";
 
 }

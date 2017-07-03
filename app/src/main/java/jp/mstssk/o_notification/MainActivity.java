@@ -2,7 +2,6 @@ package jp.mstssk.o_notification;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     return TimeoutFragment.newInstance();
                 case 2:
-                    return ColorFragment.newInstance();
+                    return ColorizedFragment.newInstance();
                 case 3:
                     return MessagingFragment.newInstance();
             }
