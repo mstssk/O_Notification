@@ -78,7 +78,7 @@ public class ColorizedService extends Service {
         }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotifyUtils.CHANNEL_ID_COLOR)
                 .setContentTitle("Colored notification")
-                .setContentText("Content text")
+                .setContentText("This notification was set colorized with foreground service.")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setColorized(colorized)
                 .setColor(color)
