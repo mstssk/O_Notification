@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="jp.mstssk.o_notification.MainActivity"
+            android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,14 +19,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="jp.mstssk.o_notification.SettingsActivity"
+            android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.NOTIFICATION_PREFERENCES"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.NOTIFICATION_PREFERENCES" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".ColorizedService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

@@ -1,20 +1,13 @@
 package jp.mstssk.o_notification;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 public class ColorizedFragment extends Fragment {
 
@@ -61,25 +54,11 @@ public class ColorizedFragment extends Fragment {
     }
 
     private void showWithColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(NotifyUtils.CHANNEL_ID_COLOR,
-                    "Colorized Channel", NotificationManagerCompat.IMPORTANCE_MAX);
-            getActivity().getSystemService(NotificationManager.class).createNotificationChannel(channel);
-        }
         Color color = ((Color) colorSpinner.getSelectedItem());
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), NotifyUtils.CHANNEL_ID_COLOR)
-                .setContentTitle(color.text + " notification")
-                .setContentText("Content text")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setColorized(colorizedCheckbox.isChecked())
-                .setColor(color.color)
-                .setOngoing(true)
-//                .setStyle(new android.support.v7.app.NotificationCompat.MediaStyle())
-                .setTimeoutAfter(10 * 1000);
-        NotificationManagerCompat.from(getActivity()).notify(21, builder.build());
+        ColorizedService.start(getActivity(), color.color, colorizedCheckbox.isChecked());
     }
 
-    private enum Color {
+    enum Color {
         // DEFAULT("Default", null),
         RED("Red", 0xf44336),
         PINK("Pink", 0xe91e63),
