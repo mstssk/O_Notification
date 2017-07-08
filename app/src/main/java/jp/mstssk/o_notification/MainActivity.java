@@ -1,18 +1,27 @@
 package jp.mstssk.o_notification;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.app.RemoteInput;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+
+    static final String TAG = "MainActivity";
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -32,6 +41,23 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT_WATCH) {
+            Bundle remoteInput = RemoteInput.getResultsFromIntent(getIntent());
+            if (remoteInput != null) {
+                String str = remoteInput.getString(NotifyUtils.REMOTE_INPUT_KEY);
+                Toast.makeText(this, "getResultsFromIntent: " + str, Toast.LENGTH_LONG).show();
+            }
+            // See MessagingFragment
+            NotificationManagerCompat.from(this).cancel(31);
+            NotificationManagerCompat.from(this).cancel(32);
+        }
+
     }
 
     @Override

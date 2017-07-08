@@ -11,4 +11,13 @@ class NotifyUtils {
     static final String CHANNEL_ID_COLOR = "CHANNEL_ID_COLOR";
     static final String CHANNEL_ID_MESSAGING = "CHANNEL_ID_MESSAGING";
 
+    static final String REMOTE_INPUT_KEY = "REMOTE_INPUT_KEY";
+
+    static final String LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit," +
+            " sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." +
+            " Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris" +
+            " nisi ut aliquip ex ea commodo consequat.";
+    static final String DUIS_AUTE = " Duis aute irure dolor in reprehenderit in voluptate velit esse cillum" +
+            " dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident," +
+            " sunt in culpa qui officia deserunt mollit anim id est laborum.";
 }
