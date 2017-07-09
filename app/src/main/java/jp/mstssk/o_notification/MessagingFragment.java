@@ -1,5 +1,6 @@
 package jp.mstssk.o_notification;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -10,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
@@ -24,6 +26,10 @@ import android.widget.Toast;
 
 import java.util.Date;
 
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.RuntimePermissions;
+
+@RuntimePermissions
 public class MessagingFragment extends Fragment {
 
     static final String TAG = "MessagingFragment";
@@ -53,7 +59,7 @@ public class MessagingFragment extends Fragment {
         view.findViewById(R.id.button_choose_contact).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseContact();
+                MessagingFragmentPermissionsDispatcher.chooseContactWithCheck(MessagingFragment.this);
             }
         });
 
@@ -75,6 +81,12 @@ public class MessagingFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        MessagingFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
     private void showMessaging() {
@@ -148,6 +160,7 @@ public class MessagingFragment extends Fragment {
             builder.addAction(action);
         }
         if (mContactUri != null) {
+            builder.setLargeIcon(ContactUtils.getContactBitmap(getActivity(), mContactUri));
             builder.addPerson(mContactUri.toString());
         }
         getActivity().getSystemService(NotificationManager.class).notify(32, builder.build());
@@ -160,6 +173,7 @@ public class MessagingFragment extends Fragment {
         getActivity().getSystemService(NotificationManager.class).createNotificationChannel(channel);
     }
 
+    @NeedsPermission(Manifest.permission.READ_CONTACTS)
     void chooseContact() {
         Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
         startActivityForResult(intent, REQUEST_CODE_PICK_CONTACT);
