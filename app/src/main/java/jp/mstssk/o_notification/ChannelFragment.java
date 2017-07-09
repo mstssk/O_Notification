@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 
 public class ChannelFragment extends Fragment {
 
+    static final String TAG = "ChannelFragment";
+
     /**
      * for System uses
      */
@@ -90,7 +92,7 @@ public class ChannelFragment extends Fragment {
                 .setContentText("No Channel")
                 .setSmallIcon(R.mipmap.ic_launcher);
         NotificationManagerCompat manager = NotificationManagerCompat.from(getActivity());
-        manager.notify(1, builder.build());
+        manager.notify(TAG, 1, builder.build());
     }
 
     private void showNotificatinWithChannel_1() {
@@ -103,7 +105,7 @@ public class ChannelFragment extends Fragment {
                 .setContentTitle("1st Content Title")
                 .setContentText("This notification in 1st Channel.")
                 .setSmallIcon(R.mipmap.ic_launcher);
-        NotificationManagerCompat.from(getActivity()).notify(2, builder.build());
+        NotificationManagerCompat.from(getActivity()).notify(TAG, 2, builder.build());
     }
 
     private void showNotificatinWithChannel_2() {
@@ -116,7 +118,7 @@ public class ChannelFragment extends Fragment {
                 .setContentTitle("2nd Content Title")
                 .setContentText("This notification in 2nd Channel.")
                 .setSmallIcon(R.mipmap.ic_launcher);
-        NotificationManagerCompat.from(getActivity()).notify(3, builder.build());
+        NotificationManagerCompat.from(getActivity()).notify(TAG, 3, builder.build());
     }
 
     private void showNotificatinWithChannel_SpecifiedConfigures() {
@@ -132,7 +134,7 @@ public class ChannelFragment extends Fragment {
                 .setContentTitle("Configured Content Title")
                 .setContentText("This notification in Configured Channel.")
                 .setSmallIcon(R.mipmap.ic_launcher);
-        NotificationManagerCompat.from(getActivity()).notify(4, builder.build());
+        NotificationManagerCompat.from(getActivity()).notify(TAG, 4, builder.build());
     }
 
     @TargetApi(Build.VERSION_CODES.O)
@@ -154,7 +156,7 @@ public class ChannelFragment extends Fragment {
                 .setContentTitle("3rd Content Title")
                 .setContentText("This notification in 3rd Channel.")
                 .setSmallIcon(R.mipmap.ic_launcher);
-        NotificationManagerCompat.from(getActivity()).notify(5, builder.build());
+        NotificationManagerCompat.from(getActivity()).notify(TAG, 5, builder.build());
     }
 
     private void showNotificatinWithChannelGroup_2() {
@@ -171,6 +173,6 @@ public class ChannelFragment extends Fragment {
                 .setContentTitle("4th Content Title")
                 .setContentText("This notification in 4th Channel.")
                 .setSmallIcon(R.mipmap.ic_launcher);
-        NotificationManagerCompat.from(getActivity()).notify(6, builder.build());
+        NotificationManagerCompat.from(getActivity()).notify(TAG, 6, builder.build());
     }
 }

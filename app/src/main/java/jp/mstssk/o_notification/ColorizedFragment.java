@@ -11,9 +11,10 @@ import android.widget.Spinner;
 
 public class ColorizedFragment extends Fragment {
 
+    static final String TAG = "ColorizedFragment";
+
     CheckBox colorizedCheckbox;
     Spinner colorSpinner;
-
 
     /**
      * for System uses

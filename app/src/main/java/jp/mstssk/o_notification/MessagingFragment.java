@@ -125,7 +125,7 @@ public class MessagingFragment extends Fragment {
             builder.setLargeIcon(ContactUtils.getContactBitmap(getActivity(), mContactUri));
             builder.addPerson(mContactUri.toString());
         }
-        NotificationManagerCompat.from(getActivity()).notify(31, builder.build());
+        NotificationManagerCompat.from(getActivity()).notify(TAG, 31, builder.build());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -163,7 +163,7 @@ public class MessagingFragment extends Fragment {
             builder.setLargeIcon(ContactUtils.getContactBitmap(getActivity(), mContactUri));
             builder.addPerson(mContactUri.toString());
         }
-        getActivity().getSystemService(NotificationManager.class).notify(32, builder.build());
+        getActivity().getSystemService(NotificationManager.class).notify(TAG, 32, builder.build());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

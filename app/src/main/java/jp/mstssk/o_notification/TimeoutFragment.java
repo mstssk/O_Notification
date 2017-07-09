@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 public class TimeoutFragment extends Fragment {
 
+    static final String TAG = "TimeoutFragment";
+
     /**
      * for System uses
      */
@@ -61,6 +63,6 @@ public class TimeoutFragment extends Fragment {
                 .setContentText("This notification be canceled after " + durationSec + " seconds.")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setTimeoutAfter(durationSec * 1000);
-        NotificationManagerCompat.from(getActivity()).notify(11, builder.build());
+        NotificationManagerCompat.from(getActivity()).notify(TAG, 11, builder.build());
     }
 }

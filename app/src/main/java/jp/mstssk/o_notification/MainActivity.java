@@ -13,10 +13,12 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.Locale;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,7 +54,11 @@ public class MainActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 Set<String> categories = intent.getCategories();
                 if (categories != null && categories.contains(Notification.INTENT_CATEGORY_NOTIFICATION_PREFERENCES)) {
+                    int notificationId = intent.getIntExtra(Notification.EXTRA_NOTIFICATION_ID, -1);
+                    String notificationTag = intent.getStringExtra(Notification.EXTRA_NOTIFICATION_TAG);
                     String channelId = intent.getStringExtra(Notification.EXTRA_CHANNEL_ID);
+                    Log.i(TAG, String.format(Locale.getDefault(), "NotificationId: %d, Tag: %s, Channel Id: %s", notificationId, notificationTag, channelId));
+
                     int position = getFragmentPositionByChannelId(channelId);
                     mViewPager.setCurrentItem(position);
                     setIntent(null); // consume a intent.
