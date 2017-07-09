@@ -61,7 +61,7 @@ public class TimeoutFragment extends Fragment {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), NotifyUtils.CHANNEL_ID_TIMEOUT)
                 .setContentTitle("Timeout " + durationSec + " sec")
                 .setContentText("This notification be canceled after " + durationSec + " seconds.")
-                .setSmallIcon(R.drawable.ic_timer_white_24dp)
+                .setSmallIcon(R.drawable.ic_timer)
                 .setTimeoutAfter(durationSec * 1000);
         NotificationManagerCompat.from(getActivity()).notify(TAG, 11, builder.build());
     }

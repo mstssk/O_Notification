@@ -103,7 +103,7 @@ public class MessagingFragment extends Fragment {
             RemoteInput remoteInput = new RemoteInput.Builder(NotifyUtils.REMOTE_INPUT_KEY)
                     .setLabel("comment")
                     .build();
-            action = new NotificationCompat.Action.Builder(R.drawable.ic_message_white_24dp,
+            action = new NotificationCompat.Action.Builder(R.drawable.ic_message,
                     "Reply", replyPendingIntent)
                     .addRemoteInput(remoteInput)
                     .build();
@@ -116,7 +116,7 @@ public class MessagingFragment extends Fragment {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), NotifyUtils.CHANNEL_ID_MESSAGING)
                 .setContentTitle("Messaging title")
                 .setContentText("This notification is with messages.")
-                .setSmallIcon(R.drawable.ic_message_white_24dp)
+                .setSmallIcon(R.drawable.ic_message)
                 .setStyle(style);
         if (action != null) {
             builder.addAction(action);
@@ -140,7 +140,7 @@ public class MessagingFragment extends Fragment {
             android.app.RemoteInput remoteInput = new android.app.RemoteInput.Builder(NotifyUtils.REMOTE_INPUT_KEY)
                     .setLabel("comment")
                     .build();
-            action = new Notification.Action.Builder(R.drawable.ic_message_white_24dp,
+            action = new Notification.Action.Builder(R.drawable.ic_message,
                     "Reply", replyPendingIntent)
                     .addRemoteInput(remoteInput)
                     .build();
@@ -154,7 +154,7 @@ public class MessagingFragment extends Fragment {
         Notification.Builder builder = new Notification.Builder(getActivity(), NotifyUtils.CHANNEL_ID_MESSAGING)
                 .setContentTitle("Historic Messaging Style")
                 .setContentText("This notification is with historic messages.")
-                .setSmallIcon(R.drawable.ic_message_white_24dp)
+                .setSmallIcon(R.drawable.ic_message)
                 .setStyle(style);
         if (action != null) {
             builder.addAction(action);

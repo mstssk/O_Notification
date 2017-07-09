@@ -79,11 +79,11 @@ public class ColorizedService extends Service {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotifyUtils.CHANNEL_ID_COLOR)
                 .setContentTitle("Colored notification")
                 .setContentText("This notification was set colorized with foreground service.")
-                .setSmallIcon(R.drawable.ic_color_lens_white_24dp)
+                .setSmallIcon(R.drawable.ic_color_lens)
                 .setColorized(colorized)
                 .setColor(color)
                 // .setOngoing(true) // startForegroundした通知は勝手にongoingになる
-                .addAction(new NotificationCompat.Action(R.drawable.ic_close_white_24dp, "Close", pendingIntent));
+                .addAction(new NotificationCompat.Action(R.drawable.ic_close, "Close", pendingIntent));
         return builder.build();
     }
 }
