@@ -1,28 +1,37 @@
 package jp.mstssk.o_notification;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
+import android.support.v4.app.RemoteInput;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Date;
-import java.util.Random;
 
 public class MessagingFragment extends Fragment {
 
     static final String TAG = "MessagingFragment";
+    private static final int REQUEST_CODE_PICK_CONTACT = 1;
+
+    ImageView contactImg;
+    TextView contactName;
+    private Uri mContactUri = null;
 
     /**
      * for System uses
@@ -38,6 +47,15 @@ public class MessagingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_messaging, container, false);
+
+        contactName = view.findViewById(R.id.contact_name);
+        contactImg = view.findViewById(R.id.image_preview);
+        view.findViewById(R.id.button_choose_contact).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseContact();
+            }
+        });
 
         view.findViewById(R.id.notify_message).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,12 +83,12 @@ public class MessagingFragment extends Fragment {
         }
 
         NotificationCompat.Action action = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT_WATCH) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             Intent replyIntent = new Intent(getActivity(), MainActivity.class);
             PendingIntent replyPendingIntent =
                     PendingIntent.getActivity(getActivity(), 1,
                             replyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            android.support.v4.app.RemoteInput remoteInput = new android.support.v4.app.RemoteInput.Builder(NotifyUtils.REMOTE_INPUT_KEY)
+            RemoteInput remoteInput = new RemoteInput.Builder(NotifyUtils.REMOTE_INPUT_KEY)
                     .setLabel("comment")
                     .build();
             action = new NotificationCompat.Action.Builder(R.mipmap.ic_launcher,
@@ -90,6 +108,10 @@ public class MessagingFragment extends Fragment {
                 .setStyle(style);
         if (action != null) {
             builder.addAction(action);
+        }
+        if (mContactUri != null) {
+            builder.setLargeIcon(ContactUtils.getContactBitmap(getActivity(), mContactUri));
+            builder.addPerson(mContactUri.toString());
         }
         NotificationManagerCompat.from(getActivity()).notify(31, builder.build());
     }
@@ -125,7 +147,9 @@ public class MessagingFragment extends Fragment {
         if (action != null) {
             builder.addAction(action);
         }
-
+        if (mContactUri != null) {
+            builder.addPerson(mContactUri.toString());
+        }
         getActivity().getSystemService(NotificationManager.class).notify(32, builder.build());
     }
 
@@ -134,6 +158,30 @@ public class MessagingFragment extends Fragment {
         NotificationChannel channel = new NotificationChannel(NotifyUtils.CHANNEL_ID_MESSAGING,
                 "Messaging Channel", NotificationManagerCompat.IMPORTANCE_DEFAULT);
         getActivity().getSystemService(NotificationManager.class).createNotificationChannel(channel);
+    }
+
+    void chooseContact() {
+        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        startActivityForResult(intent, REQUEST_CODE_PICK_CONTACT);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_CODE_PICK_CONTACT:
+                if (resultCode == Activity.RESULT_OK) {
+                    Uri contactUri = data.getData();
+                    mContactUri = contactUri;
+                    contactName.setText(ContactUtils.getContactName(getActivity(), contactUri));
+                    contactImg.setImageURI(ContactUtils.getContactImageUri(getActivity(), contactUri));
+                } else {
+                    mContactUri = null;
+                    contactName.setText(null);
+                    contactImg.setImageResource(android.R.color.transparent);
+                }
+                break;
+        }
     }
 
 }
