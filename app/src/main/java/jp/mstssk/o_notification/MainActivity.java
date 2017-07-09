@@ -1,7 +1,9 @@
 package jp.mstssk.o_notification;
 
+import android.app.Notification;
 import android.app.RemoteInput;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,19 +48,29 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         Intent intent = getIntent();
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT_WATCH
-                && intent != null) {
-            Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
-            if (remoteInput != null) {
-                setIntent(null); // consume a intent.
-                String str = remoteInput.getString(NotifyUtils.REMOTE_INPUT_KEY);
-                Toast.makeText(this, "getResultsFromIntent: " + str, Toast.LENGTH_LONG).show();
+        if (intent != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                Set<String> categories = intent.getCategories();
+                if (categories != null && categories.contains(Notification.INTENT_CATEGORY_NOTIFICATION_PREFERENCES)) {
+                    String channelId = intent.getStringExtra(Notification.EXTRA_CHANNEL_ID);
+                    int position = getFragmentPositionByChannelId(channelId);
+                    mViewPager.setCurrentItem(position);
+                    setIntent(null); // consume a intent.
+                }
             }
-            // See MessagingFragment
-            NotificationManagerCompat.from(this).cancel(31);
-            NotificationManagerCompat.from(this).cancel(32);
-        }
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+                Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
+                if (remoteInput != null) {
+                    setIntent(null); // consume a intent.
+                    String str = remoteInput.getString(NotifyUtils.REMOTE_INPUT_KEY);
+                    Toast.makeText(this, "getResultsFromIntent: " + str, Toast.LENGTH_LONG).show();
+                }
+                // See MessagingFragment
+                NotificationManagerCompat.from(this).cancel(31);
+                NotificationManagerCompat.from(this).cancel(32);
+            }
+        }
     }
 
     @Override
@@ -74,6 +88,27 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private int getFragmentPositionByChannelId(String channelId) {
+        if (channelId == null) {
+            return 0; // fallback
+        } else switch (channelId) {
+            case NotifyUtils.CHANNEL_ID_1ST:
+            case NotifyUtils.CHANNEL_ID_2ND:
+            case NotifyUtils.CHANNEL_ID_CONFIG:
+            case NotifyUtils.CHANNEL_GROUP_ID_FOO:
+            case NotifyUtils.CHANNEL_ID_3RD_WITH_GROUP_FOO:
+            case NotifyUtils.CHANNEL_ID_4th_WITH_GROUP_FOO:
+                return 0;
+            case NotifyUtils.CHANNEL_ID_TIMEOUT:
+                return 1;
+            case NotifyUtils.CHANNEL_ID_COLOR:
+                return 2;
+            case NotifyUtils.CHANNEL_ID_MESSAGING:
+                return 4;
+        }
+        return 0; // fallback
     }
 
     public static class SectionsPagerAdapter extends FragmentPagerAdapter {
