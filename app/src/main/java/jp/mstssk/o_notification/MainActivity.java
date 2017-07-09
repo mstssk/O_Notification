@@ -3,8 +3,10 @@ package jp.mstssk.o_notification;
 import android.app.Notification;
 import android.app.RemoteInput;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -89,7 +91,20 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
+                Intent intent = new Intent();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
+                } else if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    // hack from https://stackoverflow.com/questions/32366649/any-way-to-link-to-the-android-notification-settings-for-my-app
+                    intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                    intent.putExtra("app_package", getPackageName());
+                    intent.putExtra("app_uid", getApplicationInfo().uid);
+                } else {
+                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    intent.addCategory(Intent.CATEGORY_DEFAULT);
+                    intent.setData(Uri.parse("package:" + getPackageName()));
+                }
                 startActivity(intent);
                 return true;
         }
