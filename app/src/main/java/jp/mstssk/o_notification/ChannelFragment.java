@@ -90,7 +90,7 @@ public class ChannelFragment extends Fragment {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity())
                 .setContentTitle("No Channel")
                 .setContentText("No Channel")
-                .setSmallIcon(R.mipmap.ic_launcher);
+                .setSmallIcon(R.drawable.ic_notifications_white_24dp);
         NotificationManagerCompat manager = NotificationManagerCompat.from(getActivity());
         manager.notify(TAG, 1, builder.build());
     }
@@ -104,7 +104,7 @@ public class ChannelFragment extends Fragment {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), NotifyUtils.CHANNEL_ID_1ST)
                 .setContentTitle("1st Content Title")
                 .setContentText("This notification in 1st Channel.")
-                .setSmallIcon(R.mipmap.ic_launcher);
+                .setSmallIcon(R.drawable.ic_notifications_white_24dp);
         NotificationManagerCompat.from(getActivity()).notify(TAG, 2, builder.build());
     }
 
@@ -117,7 +117,7 @@ public class ChannelFragment extends Fragment {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), NotifyUtils.CHANNEL_ID_2ND)
                 .setContentTitle("2nd Content Title")
                 .setContentText("This notification in 2nd Channel.")
-                .setSmallIcon(R.mipmap.ic_launcher);
+                .setSmallIcon(R.drawable.ic_notifications_white_24dp);
         NotificationManagerCompat.from(getActivity()).notify(TAG, 3, builder.build());
     }
 
@@ -133,7 +133,7 @@ public class ChannelFragment extends Fragment {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), NotifyUtils.CHANNEL_ID_CONFIG)
                 .setContentTitle("Configured Content Title")
                 .setContentText("This notification in Configured Channel.")
-                .setSmallIcon(R.mipmap.ic_launcher);
+                .setSmallIcon(R.drawable.ic_notifications_white_24dp);
         NotificationManagerCompat.from(getActivity()).notify(TAG, 4, builder.build());
     }
 
@@ -155,7 +155,7 @@ public class ChannelFragment extends Fragment {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), NotifyUtils.CHANNEL_ID_3RD_WITH_GROUP_FOO)
                 .setContentTitle("3rd Content Title")
                 .setContentText("This notification in 3rd Channel.")
-                .setSmallIcon(R.mipmap.ic_launcher);
+                .setSmallIcon(R.drawable.ic_notifications_white_24dp);
         NotificationManagerCompat.from(getActivity()).notify(TAG, 5, builder.build());
     }
 
@@ -172,7 +172,7 @@ public class ChannelFragment extends Fragment {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), NotifyUtils.CHANNEL_ID_4th_WITH_GROUP_FOO)
                 .setContentTitle("4th Content Title")
                 .setContentText("This notification in 4th Channel.")
-                .setSmallIcon(R.mipmap.ic_launcher);
+                .setSmallIcon(R.drawable.ic_notifications_white_24dp);
         NotificationManagerCompat.from(getActivity()).notify(TAG, 6, builder.build());
     }
 }
