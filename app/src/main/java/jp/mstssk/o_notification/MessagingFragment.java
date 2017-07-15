@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
@@ -63,6 +64,20 @@ public class MessagingFragment extends Fragment {
             }
         });
 
+        view.findViewById(R.id.show_channel_settings)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                            Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                            intent.putExtra(Settings.EXTRA_CHANNEL_ID, NotifyUtils.CHANNEL_ID_MESSAGING);
+                            intent.putExtra(Settings.EXTRA_APP_PACKAGE, getActivity().getPackageName());
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getActivity(), "Only for Android O.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
         view.findViewById(R.id.notify_message).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

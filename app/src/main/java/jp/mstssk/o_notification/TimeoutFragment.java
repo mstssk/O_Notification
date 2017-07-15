@@ -2,8 +2,10 @@ package jp.mstssk.o_notification;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -31,6 +33,21 @@ public class TimeoutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_timeout, container, false);
+
+        view.findViewById(R.id.show_channel_settings)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                            Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                            intent.putExtra(Settings.EXTRA_CHANNEL_ID, NotifyUtils.CHANNEL_ID_TIMEOUT);
+                            intent.putExtra(Settings.EXTRA_APP_PACKAGE, getActivity().getPackageName());
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getActivity(), "Only for Android O.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
         view.findViewById(R.id.notify_with_timeout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

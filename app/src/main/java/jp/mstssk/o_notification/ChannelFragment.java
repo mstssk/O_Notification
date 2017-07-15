@@ -1,12 +1,15 @@
 package jp.mstssk.o_notification;
 
 import android.annotation.TargetApi;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
@@ -14,6 +17,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class ChannelFragment extends Fragment {
 
@@ -35,6 +39,20 @@ public class ChannelFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_channel, container, false);
 
+        view.findViewById(R.id.show_channel_settings)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                            Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                            intent.putExtra(Settings.EXTRA_CHANNEL_ID, NotifyUtils.CHANNEL_ID_1ST);
+                            intent.putExtra(Settings.EXTRA_APP_PACKAGE, getActivity().getPackageName());
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getActivity(), "Only for Android O.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
         view.findViewById(R.id.notify_with_no_channel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,6 +1,8 @@
 package jp.mstssk.o_notification;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class ColorizedFragment extends Fragment {
 
@@ -37,6 +40,20 @@ public class ColorizedFragment extends Fragment {
         colorArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         colorSpinner.setAdapter(colorArrayAdapter);
 
+        view.findViewById(R.id.show_channel_settings)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                            Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                            intent.putExtra(Settings.EXTRA_CHANNEL_ID, NotifyUtils.CHANNEL_ID_COLOR);
+                            intent.putExtra(Settings.EXTRA_APP_PACKAGE, getActivity().getPackageName());
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getActivity(), "Only for Android O.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
         view.findViewById(R.id.notify_with_color).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
