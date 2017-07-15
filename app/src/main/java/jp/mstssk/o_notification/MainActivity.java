@@ -21,7 +21,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.Locale;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,14 +50,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        Intent intent = getIntent();
-        if (intent != null) {
+        if (getIntent() != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                Set<String> categories = intent.getCategories();
-                if (categories != null && categories.contains(Notification.INTENT_CATEGORY_NOTIFICATION_PREFERENCES)) {
-                    int notificationId = intent.getIntExtra(Notification.EXTRA_NOTIFICATION_ID, -1);
-                    String notificationTag = intent.getStringExtra(Notification.EXTRA_NOTIFICATION_TAG);
-                    String channelId = intent.getStringExtra(Notification.EXTRA_CHANNEL_ID);
+                if (getIntent().hasCategory(Notification.INTENT_CATEGORY_NOTIFICATION_PREFERENCES)) {
+                    int notificationId = getIntent().getIntExtra(Notification.EXTRA_NOTIFICATION_ID, -1);
+                    String notificationTag = getIntent().getStringExtra(Notification.EXTRA_NOTIFICATION_TAG);
+                    String channelId = getIntent().getStringExtra(Notification.EXTRA_CHANNEL_ID);
                     Log.i(TAG, String.format(Locale.getDefault(), "NotificationId: %d, Tag: %s, Channel Id: %s", notificationId, notificationTag, channelId));
 
                     int position = getFragmentPositionByChannelId(channelId);
@@ -66,17 +63,20 @@ public class MainActivity extends AppCompatActivity {
                     setIntent(null); // consume a intent.
                 }
             }
+        }
 
+        if (getIntent() != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-                Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
+                Bundle remoteInput = RemoteInput.getResultsFromIntent(getIntent());
                 if (remoteInput != null) {
                     setIntent(null); // consume a intent.
                     String str = remoteInput.getString(NotifyUtils.REMOTE_INPUT_KEY);
                     Toast.makeText(this, "getResultsFromIntent: " + str, Toast.LENGTH_LONG).show();
+
+                    // See MessagingFragment
+                    NotificationManagerCompat.from(this).cancel(MessagingFragment.TAG, 31);
+                    NotificationManagerCompat.from(this).cancel(MessagingFragment.TAG, 32);
                 }
-                // See MessagingFragment
-                NotificationManagerCompat.from(this).cancel(31);
-                NotificationManagerCompat.from(this).cancel(32);
             }
         }
     }
