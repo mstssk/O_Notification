@@ -21,6 +21,7 @@ import android.support.v4.app.RemoteInput;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -140,6 +141,10 @@ public class MessagingFragment extends Fragment {
             builder.setLargeIcon(ContactUtils.getContactBitmap(getActivity(), mContactUri));
             builder.addPerson(mContactUri.toString());
         }
+        int messageCount = getInputMessageCount();
+        if (messageCount > 0) {
+            builder.setNumber(messageCount);
+        }
         NotificationManagerCompat.from(getActivity()).notify(TAG, 31, builder.build());
     }
 
@@ -178,6 +183,10 @@ public class MessagingFragment extends Fragment {
             builder.setLargeIcon(ContactUtils.getContactBitmap(getActivity(), mContactUri));
             builder.addPerson(mContactUri.toString());
         }
+        int messageCount = getInputMessageCount();
+        if (messageCount > 0) {
+            builder.setNumber(messageCount);
+        }
         getActivity().getSystemService(NotificationManager.class).notify(TAG, 32, builder.build());
     }
 
@@ -186,6 +195,19 @@ public class MessagingFragment extends Fragment {
         NotificationChannel channel = new NotificationChannel(NotifyUtils.CHANNEL_ID_MESSAGING,
                 "Messaging Channel", NotificationManagerCompat.IMPORTANCE_DEFAULT);
         getActivity().getSystemService(NotificationManager.class).createNotificationChannel(channel);
+    }
+
+    private int getInputMessageCount() {
+        try {
+            String input = ((EditText) getView().findViewById(R.id.message_count)).getText().toString();
+            if (input.length() < 1) {
+                return 0;
+            }
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            Toast.makeText(getContext(), "count is invalid.", Toast.LENGTH_SHORT).show();
+        }
+        return 0;
     }
 
     @NeedsPermission(Manifest.permission.READ_CONTACTS)
